@@ -1,0 +1,56 @@
+<form id="login" method="post">
+  <input type="email" name="email" value="a" placeholder="Your e-mail">
+  </br>
+  <input type="password" name="password" value="b" placeholder="Your password">
+  </br>
+  {{!-- <input type="text" name="displayName" id=""> --}}
+  <input type="submit" value="Login">
+</form>
+<script type="text/javascript">
+    const unSelectedElement = document.querySelector("#myNavbar > ul > li.active");
+    unSelectedElement.classList.remove("active");
+    const selectedElement = document.querySelector("#myNavbar > ul > li:nth-child(2)")
+    selectedElement.classList.add("active");
+</script>
+
+<script type="text/javascript">
+  const formLogin = document.querySelector('#login')
+  // when using application/x-www-form-urlencoded;charset=UTF-8, 
+  // const data = new URLSearchParams(new FormData(formLogin));
+  // const formData = new FormData(formLogin)
+
+  formLogin.addEventListener('submit', event => {
+    event.preventDefault()
+
+    // Solution to problem of adding data as body is not possible
+    // const data = new URLSearchParams();
+    // for (const pair of new FormData(formLogin)) {
+    //    data.append(pair[0], pair[1]);
+    // }
+
+    // const body = new URLSearchParams(new FormData(formLogin));
+    const formData = new FormData( formLogin )
+    const data = {}
+    for (let [key, value] of formData) {
+      data[key] = value
+    }
+    const body = JSON.stringify(data)
+
+    fetch('/api/signin', {
+      method: 'post',
+      body,
+      headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+      }
+    })
+    .then(res => res.json())
+    .then(data => localStorage.setItem('token', data.token))
+    .catch(err => console.log(err))
+  })  
+</script>
+
+{{!-- ,
+      headers: {
+                //"Content-Type": "application/json",
+                //"Content-Type": "application/x-www-form-urlencoded",
+            } --}}

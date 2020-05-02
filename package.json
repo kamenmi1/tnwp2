@@ -1,0 +1,25 @@
+{
+  "name": "web-app",
+  "version": "1.0.0",
+  "description": "webova-aplikace",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Miloslav Kamenik",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.18.3",
+    "dayjs": "^1.8.12",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "jwt-simple": "^0.5.6",
+    "mongoose": "^5.4.19"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "keywords": []
+}
