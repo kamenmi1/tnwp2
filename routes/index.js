@@ -6,11 +6,11 @@ const productCtrl = require('../controllers/product');
 const auth = require('../midlewares/auth')
 const login = require('../controllers/user')
 
-api.get('/product', productCtrl.getProducts);
-api.get('/product/:productId', productCtrl.getProducts);
-api.post('/product', auth, productCtrl.saveProduct);
-api.put('/product/:productId', auth, productCtrl.updateProduct);
-api.delete('/product/:productId', auth, productCtrl.deleteProduct);
+api.get('/products', productCtrl.getProducts);
+api.get('/products/:productId', productCtrl.getProducts);
+api.post('/products', auth, productCtrl.saveProduct);
+api.put('/products/:productId', auth, productCtrl.updateProduct);
+api.delete('/products/:productId', auth, productCtrl.deleteProduct);
 
 api.post('/signin', login.signIn)
 api.post('/signup', login.signUp)

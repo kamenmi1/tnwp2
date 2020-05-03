@@ -7,10 +7,10 @@
   <input type="submit" value="Login">
 </form>
 <script type="text/javascript">
-    const unSelectedElement = document.querySelector("#myNavbar > ul > li.active");
-    unSelectedElement.classList.remove("active");
-    const selectedElement = document.querySelector("#myNavbar > ul > li:nth-child(2)")
-    selectedElement.classList.add("active");
+  const unSelectedElement = document.querySelector("#myNavbar > ul > li.active");
+  unSelectedElement.classList.remove("active");
+  const selectedElement = document.querySelector("#myNavbar > ul > li:nth-child(2)")
+  selectedElement.classList.add("active");
 </script>
 
 <script type="text/javascript">
@@ -29,7 +29,7 @@
     // }
 
     // const body = new URLSearchParams(new FormData(formLogin));
-    const formData = new FormData( formLogin )
+    const formData = new FormData(formLogin)
     const data = {}
     for (let [key, value] of formData) {
       data[key] = value
@@ -40,12 +40,12 @@
       method: 'post',
       body,
       headers: {
-                "Content-Type": "application/json;charset=UTF-8"
+        "Content-Type": "application/json;charset=UTF-8"
       }
     })
-    .then(res => res.json())
-    .then(data => localStorage.setItem('token', data.token))
-    .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(data => localStorage.setItem('token', data.token))
+      .catch(err => console.log(err))
   })  
 </script>
 
