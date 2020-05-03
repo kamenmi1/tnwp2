@@ -1,24 +1,76 @@
-<script type="text/javascript">
-  let productList = document.createElement('ul')
+<h1>My Products</h1>
 
-  const headers = new Headers();
+<div id="products"></div>
+
+<form id="addproduct" method="post">
+  <input type="text" name="name" value="" placeholder="Name" />
+  </br>
+  <input type="number" name="price" value="" placeholder="Price" />
+  </br>
+  <textarea name="description" value="" placeholder="Description"></textarea>
+  </br>
+  <input type="submit" value="Add product">
+</form>
+
+<script type="text/javascript">
+
+  const headers = new Headers()
   headers.append('authorization', `Bearer ${localStorage.token}`)
-  
+
   fetch('/api/product', {
     method: 'get',
-    headers
+    headers,
   })
-  .then(res => res.json())
-  .then(data => {
-    console.log(data)
-    data.products.map(product => {
-      const text = document.createTextNode(product.name)
-      const item = document.createElement('li')
-      item.appendChild(text)
-      productList.appendChild(item)
+    .then(res => res.json())
+    .then(({ products }) => {
+      let elemProduct = document.querySelector('#products')
+      if (products.length === 0) {
+        elemProduct.appendChild(document.createTextNode('Empty Products'))
+        return
+      }
+      let productList = document.createElement('ul')
+      products.map((product) => {
+        const text = document.createTextNode(product.name)
+        const item = document.createElement('li')
+        item.appendChild(text)
+        productList.appendChild(item)
+      })
+      elemProduct.appendChild(productList)
     })
-    document.body.appendChild(productList)
-  })
 
-  
+  const addProduct = document.querySelector('#addproduct')
+  addProduct.addEventListener('submit', event => {
+    event.preventDefault()
+
+    // Solution to problem of adding data as body is not possible
+    // const data = new URLSearchParams();
+    // for (const pair of new FormData(addProduct)) {
+    //    data.append(pair[0], pair[1]);
+    // }
+
+    // const body = new URLSearchParams(new FormData(addProduct));
+    const formData = new FormData(addProduct)
+    const data = {}
+    for (let [key, value] of formData) {
+      if (key === "price") {
+        console.log('val: ', value)
+        data[key] = parseInt(value)
+      } else {
+        data[key] = value
+      }
+    }
+    const body = JSON.stringify(data)
+
+    fetch('/api/product', {
+      method: 'post',
+      body,
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      //.then(res => res.json())
+      //.then(data => localStorage.setItem('token', data.token))
+      .catch(err => console.log(err))
+  })
 </script>
