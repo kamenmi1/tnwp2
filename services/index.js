@@ -5,6 +5,7 @@ const config = require('../config')
 function generateToken(user) {
   const payload = {
     sub: user._id,
+    name: user.displayName || user.email,
     // token creation
     iat: dayjs().unix(),
     // expiration toke

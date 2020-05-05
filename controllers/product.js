@@ -38,6 +38,7 @@ async function saveProduct(req, res) {
   product.price = req.body.price
   product.category = req.body.category
   product.description = req.body.description
+  product.user = req.user._id
 
   product.save((err, productStored) => {
     if (err) {

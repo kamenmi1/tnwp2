@@ -11,7 +11,7 @@ const ProductSchema = Schema({
   price: { type: Number, default: 0 },
   // category: { type: String, enum: ['computers', 'phones', 'accesories'] },
   description: String,
-  // user: { type: UserSchema, require: true },
+  user: { type: Schema.Types.ObjectId, require: true, ref: 'User' },
 })
 
 module.exports = mongoose.model('Product', ProductSchema)
