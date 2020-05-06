@@ -5,7 +5,10 @@ const Product = require('../models/product')
 async function getProduct(req, res) {
   console.log(`GET product by id ${req.params.productId}`)
   try {
-    const product = await Product.findById({ _id: req.params.productId })
+    const product = await Product.findById({ _id: req.params.productId }).populate(
+      'user',
+      'email displayName'
+    )
     if (!product) {
       return res.status(404).send({ message: `Product not found with id: ${req.params.productId}` })
     }
@@ -17,7 +20,7 @@ async function getProduct(req, res) {
 
 async function getProducts(req, res) {
   try {
-    const products = await Product.find({})
+    const products = await Product.find({}).populate('user', 'email displayName')
     return res.status(200).send({ products })
   } catch (error) {
     return res.status(500).send({ message: `Error on database request: ${error}` })
@@ -38,7 +41,7 @@ async function saveProduct(req, res) {
   product.price = req.body.price
   product.category = req.body.category
   product.description = req.body.description
-  product.user = req.user._id
+  product.user = req.user
 
   product.save((err, productStored) => {
     if (err) {
